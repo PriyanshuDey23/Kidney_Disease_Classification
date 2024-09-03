@@ -18,3 +18,22 @@ except Exception as e:
     raise e
 
 # After executing , Artifacts folder , zip file download , unzip of the file will happen
+
+
+# src\Kidney_Disease_Classification\pipeline\stage_02_prepare_base_model.py
+
+from Kidney_Disease_Classification.pipeline.stage_02_prepare_base_model import PrepareBaseModelTrainingPipeline
+
+STAGE_NAME="Prepare Base Model Stage"
+try:
+    logger.info(f"Stage {STAGE_NAME} Started")
+    obj=PrepareBaseModelTrainingPipeline()  # Calling the class
+    obj.main()                           # Calling the main method,Start the data ingestion part
+    logger.info(f" Stage {STAGE_NAME} Completed")
+
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+# After executing we will  get artifacts\prepare_base_model

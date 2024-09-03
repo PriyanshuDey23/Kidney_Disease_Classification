@@ -1,1 +1,9 @@
-key: val
+# Prepare_Base _model
+AUGMENTATION: True  # Artificially increase the size of the training data
+IMAGE_SIZE: [224,224,3]  # As per VGG 16 model
+BATCH_SIZE: 16
+INCLUDE_TOP: False # I want to get the pretrain model instead of  Training from scratch , I will train my custom layer only
+EPOCHS: 10
+CLASSES: 2 # 2 classes , normal and tumor image
+WEIGHTS: imagenet  # Image classification is trained on imagenet(Pre trained model)
+LEARNING_RATE: 0.01
