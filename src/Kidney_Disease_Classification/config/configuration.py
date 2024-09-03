@@ -1,6 +1,7 @@
 from Kidney_Disease_Classification.constrants import * # Import Everything
 from Kidney_Disease_Classification.utils.common import read_yaml,create_directories 
 from Kidney_Disease_Classification.entity.config_entity import *
+import os
 
 class ConfigurationManager:
     def __init__(
@@ -51,4 +52,23 @@ class ConfigurationManager:
                 params_classes=self.params.CLASSES
             )
         return prepare_base_model_config
+    
+    # Prepare CallBacks
+
+    def get_prepare_callback_config(self) -> PrepareCallbacksConfig:
+          config=self.config.prepare_callbacks
+          model_ckpt_dir=os.path.dirname(config.checkpoint_model_filepath)
+          create_directories([
+                Path(model_ckpt_dir),                     # Check Point Directory
+                Path(config.tensorboard_root_log_dir)      # Tensorboard Directory
+            ])
+
+          prepare_callback_config=PrepareCallbacksConfig(                           # Convert Path to string
+                root_dir=str(config.root_dir),
+                tensorboard_root_log_dir=str(config.tensorboard_root_log_dir),
+                checkpoint_model_filepath=str(config.checkpoint_model_filepath)
+            )
+
+
+          return prepare_callback_config
     
