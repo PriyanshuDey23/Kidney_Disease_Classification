@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kidney Disease Classification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h3 {
+            color: #343a40;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .img-part {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-part {
+            position: relative;
+            border: 2px dashed #6c757d;
+            height: 300px;
+            width: 300px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-part img, .image-part video {
+            max-height: 100%;
+            max-width: 100%;
+            display: none;
+        }
+
+        .image-part video {
+            display: block;
+        }
+
+        .btn-part {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-part button {
+            margin: 0 10px;
+            width: 120px;
+        }
+
+        .right-part {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .jsonRes {
+            margin-top: 15px;
+            overflow-y: auto;
+            height: 250px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        #loading {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #007bff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section class="iupload">
+        <h3>Kidney Disease Classification</h3>
+        <div class="row">
+            <div class="col-md-6 img-part">
+                <div class="image-part">
+                    <video autoplay id="video" poster="https://img.freepik.com/free-vector/group-young-people-posing-photo_52683-18824.jpg"></video>
+                    <img src="" id="photo" alt="Captured image">
+                    <canvas style="display:none;" id="canvas"></canvas>
+                </div>
+                <div class="btn-part">
+                    <button type="button" class="btn btn-primary" id="upload">Upload</button>
+                    <button id="send" type="button" class="btn btn-success">Predict</button>
+                    <input type="file" id="fileinput" style="display: none;">
+                    <input type="hidden" id="url" value="../predict">
+                </div>
+            </div>
+            <div class="col-md-6 right-part">
+                <h5>Prediction Results</h5>
+                <div class="jsonRes"></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<img class="logo" src="data:image/png;base64,..."/>
+
+<div id="loading"><div class="loader"></div></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    const uploadBtn = document.getElementById('upload');
+    const sendBtn = document.getElementById('send');
+    const fileInput = document.getElementById('fileinput');
+    const video = document.getElementById('video');
+    const photo = document.getElementById('photo');
+    const canvas = document.getElementById('canvas');
+    const loading = document.getElementById('loading');
+    const jsonRes = document.querySelector('.jsonRes');
+
+    uploadBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                photo.src = event.target.result;
+                photo.style.display = 'block';
+                video.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    sendBtn.addEventListener('click', () => {
+        if (photo.src) {
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(photo, 0, 0, canvas.width, canvas.height);
+            const base64Data = canvas.toDataURL('image/jpeg').split(',')[1];
+
+            sendRequest(base64Data);
+        }
+    });
+
+    function sendRequest(base64Data) {
+        const url = document.getElementById('url').value;
+        loading.style.display = 'flex';
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ image: base64Data }),
+            success: function (response) {
+                loading.style.display = 'none';
+                jsonRes.innerHTML = `<pre>${JSON.stringify(response, null, 2)}</pre>`;
+            },
+            error: function (error) {
+                loading.style.display = 'none';
+                jsonRes.innerHTML = `<p class="text-danger">Error: ${error.responseText}</p>`;
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
