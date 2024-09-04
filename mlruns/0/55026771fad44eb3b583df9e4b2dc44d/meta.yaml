@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/Kidney_Disease_Classification/mlruns/0/55026771fad44eb3b583df9e4b2dc44d/artifacts
+end_time: 1725439533336
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 55026771fad44eb3b583df9e4b2dc44d
+run_name: bedecked-slug-417
+run_uuid: 55026771fad44eb3b583df9e4b2dc44d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1725439533148
+status: 3
+tags: []
+user_id: HP
