@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/Kidney_Disease_Classification/mlruns/0/ba5ba95cbca0479e9c4fe5561d324750/artifacts
+end_time: 1725437729590
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ba5ba95cbca0479e9c4fe5561d324750
+run_name: fun-asp-831
+run_uuid: ba5ba95cbca0479e9c4fe5561d324750
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1725437729420
+status: 3
+tags: []
+user_id: HP

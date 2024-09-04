@@ -37,3 +37,56 @@ conda activate cnncls
 ```bash
 pip install -r requirements.txt
 ```
+
+```bash
+# Finally run the following command
+python app.py
+```
+
+Now,
+```bash
+open up you local host and port
+```
+
+
+## MLflow
+
+##### cmd
+- mlflow ui
+
+### dagshub
+[dagshub](https://dagshub.com/)
+
+import dagshub
+click on remote and copy the url
+dagshub.init(repo_owner='', repo_name='', mlflow=)
+
+import mlflow
+with mlflow.start_run():
+  mlflow.log_param('parameter name', 'value')
+  mlflow.log_metric('metric name', 1)
+
+
+### DVC cmd
+
+1. dvc init
+2. dvc repro
+3. dvc dag
+
+
+## About MLflow & DVC
+
+MLflow
+
+ - Its Production Grade
+ - Trace all of your expriements
+ - Logging & taging your model
+
+
+DVC 
+
+ - Its very lite weight for POC only
+ - lite weight expriements tracker
+ - It can perform Orchestration (Creating Pipelines)
+
+
