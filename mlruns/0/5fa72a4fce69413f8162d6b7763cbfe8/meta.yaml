@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/5fa72a4fce69413f8162d6b7763cbfe8/artifacts
+end_time: 1739984140507
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5fa72a4fce69413f8162d6b7763cbfe8
+run_name: clumsy-chimp-358
+run_uuid: 5fa72a4fce69413f8162d6b7763cbfe8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739984140294
+status: 3
+tags: []
+user_id: HP

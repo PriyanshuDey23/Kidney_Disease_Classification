@@ -16,5 +16,5 @@ scipy
 Flask
 Flask-Cors
 gdown
-
-# -e . # Run separately
+streamlit
+-e .
