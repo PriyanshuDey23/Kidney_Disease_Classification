@@ -1,5 +1,7 @@
 # Kidney Disease Classification
 
+![Kidney Disease Classification](https://github.com/PriyanshuDey23/Kidney_Disease_Classification/blob/main/Output.jpg)
+
 ## Overview
 The **Kidney Disease Classification** project aims to predict whether a kidney is **healthy** or affected by a **tumor** using deep learning techniques. The model is built using the **Keras VGG16** architecture and leverages **MLflow** and **DAGsHub** for experiment tracking and version control.
 
